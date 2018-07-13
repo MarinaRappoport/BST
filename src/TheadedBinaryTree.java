@@ -37,5 +37,15 @@ public class TheadedBinaryTree {
         return null;
     }
 
+    public void preoerder() {
 
+    }
+
+    public void inorder() {
+
+    }
+
+    public void postorder() {
+        
+    }
 }
