@@ -103,11 +103,11 @@ public class TheadedBinaryTree {
         if (node.getRight() == null) {
             System.out.print("there no successor to this Node");
             return null;
-        } else if (node.isRightThread)
+        } else if (node.isRightThread())
             return node.getRight();
         else {
             node = node.getRight();
-            while (!node.isLeftThread) node = node.getLeft();
+            while (!node.isLeftThread()) node = node.getLeft();
             return node;
         }
     }
@@ -121,11 +121,11 @@ public class TheadedBinaryTree {
         if (node.getLeft() == null) {
             System.out.print("there no predecessor to this Node");
             return null;
-        } else if (node.isLeftThread)
+        } else if (node.isLeftThread())
             return node.getLeft();
         else {
             node = node.getLeft();
-            while (!node.isRightThread) node = node.getRight();
+            while (!node.isRightThread()) node = node.getRight();
             return node;
         }
     }
@@ -138,7 +138,7 @@ public class TheadedBinaryTree {
     public TBTNode minimum() {
         TBTNode node = root;
         if (node != null)
-            while (node.getLeft() != null) node = node.getLeft();
+            node = MostLeft(node);
         System.out.printf("The minimum ID is: %9d\t Student name: %s", node.getStudentId(), node.getStudentName());
         return node;
     }
@@ -166,8 +166,8 @@ public class TheadedBinaryTree {
     public void PreoerderTreeWalk(TBTNode node) {
         if (node != null) {
             System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
-            if (!node.isLeftThread) PreoerderTreeWalk(node.getLeft());
-            if (!node.isRightThread) PreoerderTreeWalk(node.getRight());
+            if (!node.isLeftThread()) PreoerderTreeWalk(node.getLeft());
+            if (!node.isRightThread()) PreoerderTreeWalk(node.getRight());
         }
     }
 
@@ -175,7 +175,12 @@ public class TheadedBinaryTree {
      * Function print the students in tree in in-order
      */
     public void InorderTreeWalk(TBTNode node) {
-        node = null;
+        node = MostLeft(node);
+        while (node.getRight() != null) {
+            System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
+            if (node.isRightThread()) node = node.getRight();
+            else node = MostLeft(node.getRight());
+        }
     }
 
     /**
@@ -183,7 +188,7 @@ public class TheadedBinaryTree {
      */
     private TBTNode MostLeft(TBTNode node) {
         if (node != null)
-            while ((node.getLeft() != null) && (!node.isLeftThread)) node = node.getLeft();
+            while ((node.getLeft() != null) && (!node.isLeftThread())) node = node.getLeft();
         return node;
     }
 
@@ -192,8 +197,8 @@ public class TheadedBinaryTree {
      */
     public void PostorderTreeWalk(TBTNode node) {
         if (node != null) {
-            if (!node.isLeftThread) PostorderTreeWalk(node.getLeft());
-            if (!node.isRightThread) PostorderTreeWalk(node.getRight());
+            if (!node.isLeftThread()) PostorderTreeWalk(node.getLeft());
+            if (!node.isRightThread()) PostorderTreeWalk(node.getRight());
             System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
         }
     }
