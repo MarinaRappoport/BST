@@ -76,8 +76,10 @@ public class TheadedBinaryTree {
     public TBTNode search(int key) {
         TBTNode node = root;
         while (node != null && key != node.getStudentId()) {
-            if (key < node.getStudentId()) node = node.getLeft();
-            else node = node.getRight();
+            if (key < node.getStudentId() && !node.isLeftThread()) node = node.getLeft();
+            else if (key < node.getStudentId() && node.isLeftThread()) node = null;
+            else if (!node.isRightThread()) node = node.getRight();
+            else node = null;
         }
         return node;
     }
