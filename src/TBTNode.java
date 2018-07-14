@@ -9,12 +9,21 @@ public class TBTNode {
     private TBTNode right;
 
     //true if the left points to predecessor
-    boolean isLeftThread;
+    private boolean isLeftThread;
     //true if the right points to successor
-    boolean isRightThread;
+    private boolean isRightThread;
 
-    public TBTNode(int studentId) {
+    /**
+     * Constructor to build TBT node
+     *
+     * @param studentId   student id
+     * @param studentName student name
+     */
+    public TBTNode(int studentId, String studentName) {
         this.studentId = studentId;
+        this.studentName = studentName;
+        this.isLeftThread = true;
+        this.isRightThread = true;
     }
 
     public int getStudentId() {
@@ -47,5 +56,21 @@ public class TBTNode {
 
     public void setRight(TBTNode right) {
         this.right = right;
+    }
+
+    public boolean isLeftThread() {
+        return isLeftThread;
+    }
+
+    public void setLeftThread(boolean leftThread) {
+        isLeftThread = leftThread;
+    }
+
+    public boolean isRightThread() {
+        return isRightThread;
+    }
+
+    public void setRightThread(boolean rightThread) {
+        isRightThread = rightThread;
     }
 }
