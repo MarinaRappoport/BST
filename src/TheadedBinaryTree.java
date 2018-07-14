@@ -3,37 +3,91 @@
  */
 public class TheadedBinaryTree {
 
-    private Node root;
+    private TBTNode root;
 
-    public void insert(int key){
+    public TheadedBinaryTree() {
+        this.root = null;
+    }
+
+    /**
+     * Function to insert key into Threaded Binary Tree
+     *
+     * @param key key to insert
+     */
+    public void insert(int key) {
 
     }
 
-    public void remove(int key){
-
-    }
-
-    public Node search(int key){
+    /**
+     * Function to delete a node with key specified from the Threaded Binary Tree
+     *
+     * @param key key to insert
+     * @return new root of the tree
+     */
+    public TBTNode remove(int key) {
         return null;
     }
 
-    public Node successor(Node node){
+    /**
+     * Function to find node with the key specified
+     *
+     * @param key key to find
+     * @return TBTNode that contains key
+     */
+    public TBTNode search(int key) {
+        TBTNode node = root;
+        while (node != null && key != node.getStudentId()) {
+            if (key < node.getStudentId()) node = node.getLeft();
+            else node = node.getRight();
+        }
+        return node;
+    }
+
+//    /**
+//     * @param node
+//     * @param key
+//     * @return
+//     */
+//    public TBTNode searchRecursive(TBTNode node, int key) {
+//        if (node == null || key == node.getStudentId())
+//            return node;
+//        if (key < node.getStudentId()) return searchRecursive(node.getLeft(), key);
+//        else return searchRecursive(node.getRight(), key);
+//    }
+
+    public TBTNode successor(TBTNode TBTNode) {
         return null;
     }
 
-    public Node predecessor(Node node){
+    public TBTNode predecessor(TBTNode TBTNode) {
         return null;
     }
 
-    public Node minimum(){
-        return null;
+    /**
+     * Function to find minimum of the tree
+     *
+     * @return Node with minimum key
+     */
+    public TBTNode minimum() {
+        TBTNode node = root;
+        if (node != null)
+            while (node.getLeft() != null) node = node.getLeft();
+        return node;
     }
 
-    public Node maksimum(){
-        return null;
+    /**
+     * Function to find maximum of the tree
+     *
+     * @return Node with maximum key
+     */
+    public TBTNode maximum() {
+        TBTNode node = root;
+        if (node != null)
+            while (node.getRight() != null) node = node.getRight();
+        return node;
     }
 
-    public Node median(){
+    public TBTNode median() {
         return null;
     }
 
@@ -46,6 +100,6 @@ public class TheadedBinaryTree {
     }
 
     public void postorder() {
-        
+
     }
 }
