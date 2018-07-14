@@ -55,35 +55,65 @@ public class TheadedBinaryTree {
 //        else return searchRecursive(node.getRight(), key);
 //    }
 
-    public TBTNode successor(TBTNode TBTNode) {
-        return null;
+    /**
+     * Funcrion to find the successor to given Node
+     * if the given Node is the maximum in the tree return null
+     * else return Node with successor id number
+     */
+    public TBTNode successor(TBTNode node) {
+        if (node.getRight() == null) {
+            System.out.print("there no successor to this Node");
+            return null;
+        } else if (node.isRightThread)
+            return node.getRight();
+        else {
+            node = node.getRight();
+            while (!node.isLeftThread) node = node.getLeft();
+            return node;
+        }
     }
 
-    public TBTNode predecessor(TBTNode TBTNode) {
-        return null;
+    /**
+     * Funcrion to find the predecessor to given Node
+     * if the given Node is the minimum in the tree return null
+     * else return Node with predecessor id number
+     */
+    public TBTNode predecessor(TBTNode node) {
+        if (node.getLeft() == null) {
+            System.out.print("there no predecessor to this Node");
+            return null;
+        } else if (node.isLeftThread)
+            return node.getLeft();
+        else {
+            node = node.getLeft();
+            while (!node.isRightThread) node = node.getRight();
+            return node;
+        }
     }
 
     /**
      * Function to find minimum of the tree
-     *
-     * @return Node with minimum key
+     * print the minimum student id and name
+     * @return Node with minimum id
      */
     public TBTNode minimum() {
         TBTNode node = root;
         if (node != null)
             while (node.getLeft() != null) node = node.getLeft();
+        System.out.printf("The minimum ID is: %9d\t Student name: %s", node.getStudentId(), node.getStudentName());
         return node;
     }
 
     /**
      * Function to find maximum of the tree
-     *
-     * @return Node with maximum key
+     * print the maximum student id and name
+     * @return Node with maximum id
      */
     public TBTNode maximum() {
         TBTNode node = root;
         if (node != null)
             while (node.getRight() != null) node = node.getRight();
+        System.out.printf("The maximum ID is: %9d\t Student name: %s", node.getStudentId(), node.getStudentName());
         return node;
     }
 
@@ -91,15 +121,41 @@ public class TheadedBinaryTree {
         return null;
     }
 
-    public void preoerder() {
-
+    /**
+     * Function print the students in tree in pre-order
+     */
+    public void PreoerderTreeWalk(TBTNode node) {
+        if (node != null) {
+            System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
+            if (!node.isLeftThread) PreoerderTreeWalk(node.getLeft());
+            if (!node.isRightThread) PreoerderTreeWalk(node.getRight());
+        }
     }
 
-    public void inorder() {
-
+    /**
+     * Function print the students in tree in in-order
+     */
+    public void InorderTreeWalk(TBTNode node) {
+        node = null;
     }
 
-    public void postorder() {
+    /**
+     * @return the most left in the subtree of given node
+     */
+    private TBTNode MostLeft(TBTNode node) {
+        if (node != null)
+            while ((node.getLeft() != null) && (!node.isLeftThread)) node = node.getLeft();
+        return node;
+    }
 
+    /**
+     * Function print the students in tree in post-order
+     */
+    public void PostorderTreeWalk(TBTNode node) {
+        if (node != null) {
+            if (!node.isLeftThread) PostorderTreeWalk(node.getLeft());
+            if (!node.isRightThread) PostorderTreeWalk(node.getRight());
+            System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
+        }
     }
 }
