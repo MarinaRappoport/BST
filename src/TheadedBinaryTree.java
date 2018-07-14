@@ -10,12 +10,51 @@ public class TheadedBinaryTree {
     }
 
     /**
-     * Function to insert key into Threaded Binary Tree
+     * Function to insert new student info into Threaded Binary Tree
      *
      * @param key key to insert
+     * @return new root of the tree
      */
-    public void insert(int key) {
-
+    public TBTNode insert(int key, String studentName) {
+        TBTNode newNode = new TBTNode(key, studentName);
+        TBTNode node = root;
+        TBTNode parent = null; //parent of the node to be inserted
+        while (node != null) {
+            if (key == node.getStudentId()) {
+                System.out.println("There is already student with the same id");
+                return root;
+            } else {
+                parent = node;
+                //go to the left subtree
+                if (key < node.getStudentId()) {
+                    if (node.isLeftThread()) break;
+                    else node = node.getLeft();
+                }
+                //go to the right subtree
+                else {
+                    if (node.isRightThread()) break;
+                    else node = node.getRight();
+                }
+            }
+        }
+        //in case the tree is empty
+        if (parent == null) root = newNode;
+            //if key less than parent key put new node to the left
+        else if (key < parent.getStudentId()) {
+            newNode.setLeft(parent.getLeft());
+            newNode.setRight(parent);
+            parent.setLeftThread(false);
+            parent.setLeft(newNode);
+        }
+        //if key more than parent key put new node to the right
+        else {
+            newNode.setLeft(parent);
+            newNode.setLeftThread(true);
+            newNode.setRight(parent.getRight());
+            parent.setRightThread(false);
+            parent.setRight(newNode);
+        }
+        return root;
     }
 
     /**
