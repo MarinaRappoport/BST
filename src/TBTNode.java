@@ -73,4 +73,9 @@ public class TBTNode {
     public void setRightThread(boolean rightThread) {
         isRightThread = rightThread;
     }
+
+    public void copyInfo(TBTNode another) {
+        this.studentId = another.studentId;
+        this.studentName = another.studentName;
+    }
 }
