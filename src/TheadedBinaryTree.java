@@ -64,7 +64,144 @@ public class TheadedBinaryTree {
      * @return new root of the tree
      */
     public TBTNode remove(int key) {
-        return null;
+        TBTNode node = root;
+        TBTNode parent = null;
+        boolean isFound = false;
+        while (node != null) {
+            if (key == node.getStudentId()) {
+                isFound = true;
+                break;
+            }
+            parent = node;
+            if (key < node.getStudentId()) {
+                if (!node.isLeftThread())
+                    node = node.getLeft();
+                else
+                    break;
+            } else {
+                if (!node.isRightThread())
+                    node = node.getRight();
+                else
+                    break;
+            }
+        }
+
+        if (!isFound)
+            System.out.println("No student with the id: " + key + "\n");
+
+            // Two Children
+        else if (!node.isLeftThread() && !node.isRightThread())
+            root = removeCase3(root, node);
+
+            // Only one Child
+        else if (!node.isLeftThread() || !node.isRightThread())
+            root = removeCase2(root, parent, node);
+
+            // No children
+        else
+            root = removeCase1(root, parent, node);
+
+        return root;
+    }
+
+    /**
+     * Case of deletion when node has no children
+     *
+     * @param root   root of the TBT
+     * @param parent parent of the node to be deleted
+     * @param node   node to be deleted
+     * @return new root
+     */
+    private TBTNode removeCase1(TBTNode root, TBTNode parent, TBTNode node) {
+        // If Node to be deleted is root
+        if (parent == null)
+            root = null;
+
+            // if Node to be deleted is left of its parent
+        else if (node == parent.getLeft()) {
+            parent.setLeftThread(true);
+            parent.setLeft(node.getLeft());
+        }
+        // if Node to be deleted is right of its parent
+        else {
+            parent.setRightThread(true);
+            parent.setRight(node.getRight());
+        }
+        return root;
+    }
+
+    /**
+     * Case of deletion when node has one child
+     *
+     * @param root   root of the TBT
+     * @param parent parent of the node to be deleted
+     * @param node   node to be deleted
+     * @return new root
+     */
+    private TBTNode removeCase2(TBTNode root, TBTNode parent, TBTNode node) {
+        TBTNode child;
+
+        // node to be deleted has left child.
+        if (!node.isLeftThread())
+            child = node.getLeft();
+
+            // node to be deleted has right child.
+        else
+            child = node.getRight();
+
+        // Node to be deleted is root Node.
+        if (parent == null)
+            root = child;
+
+            // Node is left child of its parent.
+        else if (node == parent.getLeft())
+            parent.setLeft(child);
+        else
+            parent.setRight(child);
+
+        // Find successor and predecessor
+        TBTNode successor = successor(node);
+        TBTNode predecessor = predecessor(node);
+
+        // If ptr has left subtree.
+        if (!node.isLeftThread())
+            predecessor.setRight(successor);
+
+            // If ptr has right subtree.
+        else {
+            if (!node.isRightThread())
+                successor.setLeft(predecessor);
+        }
+
+        return root;
+    }
+
+    /**
+     * Case of deletion when node has two children
+     *
+     * @param root root of the TBT
+     * @param node node to be deleted
+     * @return new root
+     */
+    private TBTNode removeCase3(TBTNode root, TBTNode node) {
+        // Find inorder successor and its parent.
+        TBTNode parentSuccessor = node;
+        TBTNode successor = node.getRight();
+
+        // Find leftmost child of successor
+        while (successor.getLeft() != null) {
+            parentSuccessor = successor;
+            successor = successor.getLeft();
+        }
+
+        node.copyInfo(successor);
+
+        if (successor.isLeftThread() && successor.isRightThread())
+            root = removeCase1(root, parentSuccessor, successor);
+        else
+            root = removeCase2(root, parentSuccessor, successor);
+
+        return root;
     }
 
     /**
@@ -97,8 +234,10 @@ public class TheadedBinaryTree {
 //    }
 
     /**
-     * Funcrion to find the successor to given Node
-     * if the given Node is the maximum in the tree return null
+     * Function to find the successor to given Node
+     *
+     * @param node given Node
+     * @return if the given Node is the maximum in the tree return null
      * else return Node with successor id number
      */
     public TBTNode successor(TBTNode node) {
@@ -115,8 +254,10 @@ public class TheadedBinaryTree {
     }
 
     /**
-     * Funcrion to find the predecessor to given Node
-     * if the given Node is the minimum in the tree return null
+     * Function to find the predecessor to given Node
+     *
+     * @param node given Node
+     * @return if the given Node is the minimum in the tree return null
      * else return Node with predecessor id number
      */
     public TBTNode predecessor(TBTNode node) {
@@ -135,12 +276,13 @@ public class TheadedBinaryTree {
     /**
      * Function to find minimum of the tree
      * print the minimum student id and name
+     *
      * @return Node with minimum id
      */
     public TBTNode minimum() {
         TBTNode node = root;
         if (node != null)
-            node = MostLeft(node);
+            node = mostLeft(node);
         System.out.printf("The minimum ID is: %9d\t Student name: %s", node.getStudentId(), node.getStudentName());
         return node;
     }
@@ -148,6 +290,7 @@ public class TheadedBinaryTree {
     /**
      * Function to find maximum of the tree
      * print the maximum student id and name
+     *
      * @return Node with maximum id
      */
     public TBTNode maximum() {
@@ -165,30 +308,34 @@ public class TheadedBinaryTree {
     /**
      * Function print the students in tree in pre-order
      */
-    public void PreoerderTreeWalk(TBTNode node) {
+    public void preorderTreeWalk() {
+        preorderTreeWalk(root);
+    }
+
+    private void preorderTreeWalk(TBTNode node) {
         if (node != null) {
             System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
-            if (!node.isLeftThread()) PreoerderTreeWalk(node.getLeft());
-            if (!node.isRightThread()) PreoerderTreeWalk(node.getRight());
+            if (!node.isLeftThread()) preorderTreeWalk(node.getLeft());
+            if (!node.isRightThread()) preorderTreeWalk(node.getRight());
         }
     }
 
     /**
      * Function print the students in tree in in-order
      */
-    public void InorderTreeWalk(TBTNode node) {
-        node = MostLeft(node);
+    public void inorderTreeWalk() {
+        TBTNode node = mostLeft(root);
         while (node.getRight() != null) {
             System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
             if (node.isRightThread()) node = node.getRight();
-            else node = MostLeft(node.getRight());
+            else node = mostLeft(node.getRight());
         }
     }
 
     /**
      * @return the most left in the subtree of given node
      */
-    private TBTNode MostLeft(TBTNode node) {
+    private TBTNode mostLeft(TBTNode node) {
         if (node != null)
             while ((node.getLeft() != null) && (!node.isLeftThread())) node = node.getLeft();
         return node;
@@ -197,10 +344,14 @@ public class TheadedBinaryTree {
     /**
      * Function print the students in tree in post-order
      */
-    public void PostorderTreeWalk(TBTNode node) {
+    public void postorderTreeWalk() {
+        postorderTreeWalk(root);
+    }
+
+    private void postorderTreeWalk(TBTNode node) {
         if (node != null) {
-            if (!node.isLeftThread()) PostorderTreeWalk(node.getLeft());
-            if (!node.isRightThread()) PostorderTreeWalk(node.getRight());
+            if (!node.isLeftThread()) postorderTreeWalk(node.getLeft());
+            if (!node.isRightThread()) postorderTreeWalk(node.getRight());
             System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
         }
     }
