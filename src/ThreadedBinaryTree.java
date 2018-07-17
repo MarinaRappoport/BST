@@ -233,6 +233,9 @@ public class ThreadedBinaryTree {
             else if (!node.isRightThread()) node = node.getRight();
             else node = null;
         }
+        if (node == null) System.out.println("Student not found");
+        else
+            System.out.printf("Student found!student details ID:%9d\t Name:%s\n", node.getStudentId(), node.getStudentName());
         return node;
     }
 
@@ -317,6 +320,9 @@ public class ThreadedBinaryTree {
     }
 
     public TBTNode median() {
+        if (median == null) System.out.println("No students");
+        else
+            System.out.printf("Median student details: ID: %9d\t Name: %s\n", median.getStudentId(), median.getStudentName());
         return median;
     }
 
@@ -340,7 +346,7 @@ public class ThreadedBinaryTree {
      */
     public void inorderTreeWalk() {
         TBTNode node = mostLeft(root);
-        while (node.getRight() != null) {
+        while (node != null) {
             System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
             if (node.isRightThread()) node = node.getRight();
             else node = mostLeft(node.getRight());

@@ -26,7 +26,7 @@ public class Main {
         int status = chooser.showOpenDialog(null);
         if (status != JFileChooser.APPROVE_OPTION)
             System.out.println("no file Chosen");
-        else fileinsert(chooser.getSelectedFile());
+        else fileInsert(chooser.getSelectedFile());
         Scanner scanner = new Scanner(System.in);
         String command = null;
         while (!(command = scanner.nextLine()).equalsIgnoreCase(Command.EXIT.toString())) {
@@ -34,7 +34,7 @@ public class Main {
         }
     }
 
-    private static void fileinsert(File file) throws IOException {
+    private static void fileInsert(File file) throws IOException {
         Scanner scan = new Scanner(file);
         while (scan.hasNext()) {
             int id = scan.nextInt();
@@ -76,10 +76,7 @@ public class Main {
                     if (commandArgs.length > 1) {
                         int id = getId(commandArgs[1]);
                         if (id > 0) {
-                            TBTNode node = tbt.search(id);
-                            if (node == null) System.out.println("Student not found");
-                            else
-                                System.out.printf("Student found! student details: ID: %9d\t Name: %s\n", node.getStudentId(), node.getStudentName());
+                            tbt.search(id);
                         }
                     } else
                         System.out.println("Not enough parameters");
@@ -88,10 +85,7 @@ public class Main {
                     tbt.minimum();
                     break;
                 case MEDIAN:
-                    TBTNode med = tbt.median();
-                    if (med == null) System.out.println("No students");
-                    else
-                        System.out.printf("Median student details: ID: %9d\t Name: %s\n", med.getStudentId(), med.getStudentName());
+                    tbt.median();
                     break;
                 case MAXIMUM:
                     tbt.maximum();
