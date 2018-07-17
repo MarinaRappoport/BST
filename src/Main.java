@@ -12,12 +12,13 @@ public class Main {
         System.out.println("Print commands, each on new string\n"
                 + "There is support for the following commands:\n"
                 + "INSERT,studentId,studentName - to insert new student info;\n"
-                + "INSERT also available from file - in format: studentId studentName;\n"
                 + "REMOVE,studentId - to remove student with given id;\n"
                 + "SEARCH,studentId - to find student with given id;\n"
                 + "MINIMUM - to find student with minimum id;\n"
                 + "MEDIAN - to find student with median id;\n"
                 + "MAXIMUM - to remove student with maximum id;\n"
+                + "PREDECESSOR,id - to find student with predecessor id;\n"
+                + "SUCCESSOR,id - to find student with successor id;\n"
                 + "INORDER - to print all students info inorder;\n"
                 + "PREORDER - to print all students info preorder;\n"
                 + "POSTORDER - to print all students info postorder;\n"
@@ -37,9 +38,8 @@ public class Main {
     private static void fileInsert(File file) throws IOException {
         Scanner scan = new Scanner(file);
         while (scan.hasNext()) {
-            int id = scan.nextInt();
-            String name = scan.nextLine();
-            tbt.insert(id, name);
+            String command = scan.nextLine();
+            executeCommand(command);
         }
     }
 
@@ -89,6 +89,24 @@ public class Main {
                     break;
                 case MAXIMUM:
                     tbt.maximum();
+                    break;
+                case PREDECESSOR:
+                    if (commandArgs.length > 1) {
+                        int id = getId(commandArgs[1]);
+                        if (id > 0) {
+                            tbt.predecessor(id);
+                        }
+                    } else
+                        System.out.println("Not enough parameters");
+                    break;
+                case SUCCESSOR:
+                    if (commandArgs.length > 1) {
+                        int id = getId(commandArgs[1]);
+                        if (id > 0) {
+                            tbt.successor(id);
+                        }
+                    } else
+                        System.out.println("Not enough parameters");
                     break;
                 case INORDER:
                     tbt.inOrderTreeWalk();

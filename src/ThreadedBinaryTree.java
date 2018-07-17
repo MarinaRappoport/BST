@@ -259,7 +259,7 @@ public class ThreadedBinaryTree {
      * @return if the given Node is the maximum in the tree return null
      * else return Node with successor id number
      */
-    public TBTNode successor(TBTNode node) {
+    private TBTNode successor(TBTNode node) {
         if (node.getRight() == null) {
             System.out.print("there no successor to this Node");
             return null;
@@ -272,6 +272,20 @@ public class ThreadedBinaryTree {
         }
     }
 
+    public void successor(int key) {
+        TBTNode node = search(key);
+        if (node != null)
+            node = successor(node);
+        System.out.printf("The successor student id is:%9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
+    }
+
+    public void predecessor(int key) {
+        TBTNode node = search(key);
+        if (node != null)
+            node = predecessor(node);
+        System.out.printf("The predecessor student id is:%9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
+
+    }
     /**
      * Function to find the predecessor to given Node
      *
@@ -279,7 +293,7 @@ public class ThreadedBinaryTree {
      * @return if the given Node is the minimum in the tree return null
      * else return Node with predecessor id number
      */
-    public TBTNode predecessor(TBTNode node) {
+    private TBTNode predecessor(TBTNode node) {
         if (node.getLeft() == null) {
             System.out.print("there no predecessor to this Node");
             return null;
