@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Authors: Katrin Ten, Marina Rappoport
  */
 public class Main {
-    private static TheadedBinaryTree tbt = new TheadedBinaryTree();
+    private static ThreadedBinaryTree tbt = new ThreadedBinaryTree();
 
     public static void main(String[] args) throws IOException {
         System.out.println("Print commands, each on new string\n"
@@ -79,7 +79,7 @@ public class Main {
                             TBTNode node = tbt.search(id);
                             if (node == null) System.out.println("Student not found");
                             else
-                                System.out.printf("Student found! student details: ID: %9d\t Name: &s\n", node.getStudentId(), node.getStudentName());
+                                System.out.printf("Student found! student details: ID: %9d\t Name: %s\n", node.getStudentId(), node.getStudentName());
                         }
                     } else
                         System.out.println("Not enough parameters");
@@ -91,7 +91,7 @@ public class Main {
                     TBTNode med = tbt.median();
                     if (med == null) System.out.println("No students");
                     else
-                        System.out.printf("Median student details: ID: %9d\t Name: &s\n", med.getStudentId(), med.getStudentName());
+                        System.out.printf("Median student details: ID: %9d\t Name: %s\n", med.getStudentId(), med.getStudentName());
                     break;
                 case MAXIMUM:
                     tbt.maximum();

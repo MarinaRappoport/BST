@@ -1,12 +1,12 @@
 /**
  * Represents data structure Threaded Binary Tree
  */
-public class TheadedBinaryTree {
+public class ThreadedBinaryTree {
 
     private TBTNode root;
     private TBTNode median = null;
 
-    public TheadedBinaryTree() {
+    public ThreadedBinaryTree() {
         this.root = null;
     }
 
@@ -329,7 +329,7 @@ public class TheadedBinaryTree {
 
     private void preorderTreeWalk(TBTNode node) {
         if (node != null) {
-            System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
+            System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
             if (!node.isLeftThread()) preorderTreeWalk(node.getLeft());
             if (!node.isRightThread()) preorderTreeWalk(node.getRight());
         }
@@ -341,7 +341,7 @@ public class TheadedBinaryTree {
     public void inorderTreeWalk() {
         TBTNode node = mostLeft(root);
         while (node.getRight() != null) {
-            System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
+            System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
             if (node.isRightThread()) node = node.getRight();
             else node = mostLeft(node.getRight());
         }
@@ -367,7 +367,7 @@ public class TheadedBinaryTree {
         if (node != null) {
             if (!node.isLeftThread()) postorderTreeWalk(node.getLeft());
             if (!node.isRightThread()) postorderTreeWalk(node.getRight());
-            System.out.printf("%9d\t &s\n", node.getStudentId(), node.getStudentName());
+            System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
         }
     }
 }
