@@ -23,7 +23,7 @@ public class ThreadedBinaryTree {
         TBTNode parent = null; //parent of the node to be inserted
         while (node != null) {
             if (key == node.getStudentId()) {
-                System.out.println("There is already student with the same id");
+                System.out.printf("There is already student with the same id %d\n", key);
                 return root;
             } else {
                 parent = node;
@@ -234,7 +234,7 @@ public class ThreadedBinaryTree {
             else if (!node.isRightThread()) node = node.getRight();
             else node = null;
         }
-        if (node == null) System.out.println("Student not found");
+        if (node == null) System.out.printf("Student with id %d not found\n", key);
         else
             System.out.printf("Student found!student details ID:%9d\t Name:%s\n", node.getStudentId(), node.getStudentName());
         return node;
@@ -272,18 +272,30 @@ public class ThreadedBinaryTree {
         }
     }
 
+    /**
+     * print the successor student for given id
+     *
+     * @param key
+     */
     public void successor(int key) {
         TBTNode node = search(key);
-        if (node != null)
+        if (node != null) {
             node = successor(node);
-        System.out.printf("The successor student id is:%9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
+            System.out.printf("The successor student id is:%9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
+        } else System.out.printf("Can't find successor for not exist student\n");
     }
 
+    /**
+     * print the predecessor student for given id
+     *
+     * @param key
+     */
     public void predecessor(int key) {
         TBTNode node = search(key);
-        if (node != null)
+        if (node != null) {
             node = predecessor(node);
-        System.out.printf("The predecessor student id is:%9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
+            System.out.printf("The predecessor student id is:%9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
+        } else System.out.printf("Can't find predecessor for not exist student\n");
 
     }
     /**
@@ -334,6 +346,9 @@ public class ThreadedBinaryTree {
         return node;
     }
 
+    /**
+     * function update the pointer to the median due to insert or delete form tree
+     */
     private void medianUpdate() {
         if ((smaller + 1) < bigger) {
             median = successor(median);
@@ -348,8 +363,7 @@ public class ThreadedBinaryTree {
 
     /**
      * print the details of the median student
-     *
-     * @return
+     * @return median node
      */
     public TBTNode median() {
         if (median == null) System.out.println("No students");
@@ -360,8 +374,10 @@ public class ThreadedBinaryTree {
 
     /**
      * Function print the students in tree in pre-order
+     * call for private  recursive method
      */
     public void preOrderTreeWalk() {
+        System.out.println("Pre Order print:");
         preOrderTreeWalk(root);
     }
 
@@ -377,6 +393,7 @@ public class ThreadedBinaryTree {
      * Function print the students in tree in in-order
      */
     public void inOrderTreeWalk() {
+        System.out.println("In Order print:");
         TBTNode node = mostLeft(root);
         while (node != null) {
             System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
@@ -396,8 +413,10 @@ public class ThreadedBinaryTree {
 
     /**
      * Function print the students in tree in post-order
+     * call for private  recursive method 
      */
     public void postOrderTreeWalk() {
+        System.out.println("Post Order print:");
         postOrderTreeWalk(root);
     }
 
