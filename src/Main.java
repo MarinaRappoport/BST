@@ -9,8 +9,6 @@ public class Main {
     private static TheadedBinaryTree tbt = new TheadedBinaryTree();
 
     public static void main(String[] args) throws IOException {
-        JFileChooser chooser = new JFileChooser();
-        int status = chooser.showOpenDialog(null);
         System.out.println("Print commands, each on new string\n"
                 + "There is support for the following commands:\n"
                 + "INSERT,studentId,studentName - to insert new student info;\n"
@@ -24,6 +22,8 @@ public class Main {
                 + "PREORDER - to print all students info preorder;\n"
                 + "POSTORDER - to print all students info postorder;\n"
                 + "EXIT - to exit the program\n");
+        JFileChooser chooser = new JFileChooser();
+        int status = chooser.showOpenDialog(null);
         if (status != JFileChooser.APPROVE_OPTION)
             System.out.println("no file Chosen");
         else fileinsert(chooser.getSelectedFile());
