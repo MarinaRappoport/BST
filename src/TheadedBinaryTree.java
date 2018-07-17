@@ -4,6 +4,7 @@
 public class TheadedBinaryTree {
 
     private TBTNode root;
+    private TBTNode median = null;
 
     public TheadedBinaryTree() {
         this.root = null;
@@ -19,7 +20,7 @@ public class TheadedBinaryTree {
         TBTNode newNode = new TBTNode(key, studentName);
         TBTNode node = root;
         TBTNode parent = null; //parent of the node to be inserted
-        while (node != null) {
+        while (node != null) { //Katrin: why not to use the search method?
             if (key == node.getStudentId()) {
                 System.out.println("There is already student with the same id");
                 return root;
@@ -38,7 +39,10 @@ public class TheadedBinaryTree {
             }
         }
         //in case the tree is empty
-        if (parent == null) root = newNode;
+        if (parent == null) {
+            root = newNode;
+            median = newNode;
+        }
             //if key less than parent key put new node to the left
         else if (key < parent.getStudentId()) {
             newNode.setLeft(parent.getLeft());
@@ -54,6 +58,11 @@ public class TheadedBinaryTree {
             parent.setRightThread(false);
             parent.setRight(newNode);
         }
+        //find the new median after insert
+        if (newNode.getStudentId() < median.getStudentId())
+            median = predecessor(median);
+        else if (newNode.getStudentId() > median.getStudentId())
+            median = successor(median);
         return root;
     }
 
@@ -67,7 +76,7 @@ public class TheadedBinaryTree {
         TBTNode node = root;
         TBTNode parent = null;
         boolean isFound = false;
-        while (node != null) {
+        while (node != null) { //Katrin: why not to use the search method?
             if (key == node.getStudentId()) {
                 isFound = true;
                 break;
@@ -88,6 +97,12 @@ public class TheadedBinaryTree {
 
         if (!isFound)
             System.out.println("No student with the id: " + key + "\n");
+
+        //found the new median before delete the the student
+        if (node.getStudentId() < median.getStudentId())
+            median = successor(median);
+        else if (node.getStudentId() >= median.getStudentId())
+            median = predecessor(median);
 
             // Two Children
         else if (!node.isLeftThread() && !node.isRightThread())
@@ -283,7 +298,7 @@ public class TheadedBinaryTree {
         TBTNode node = root;
         if (node != null)
             node = mostLeft(node);
-        System.out.printf("The minimum ID is: %9d\t Student name: %s", node.getStudentId(), node.getStudentName());
+        System.out.printf("The minimum ID is: %9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
         return node;
     }
 
@@ -297,12 +312,12 @@ public class TheadedBinaryTree {
         TBTNode node = root;
         if (node != null)
             while (node.getRight() != null) node = node.getRight();
-        System.out.printf("The maximum ID is: %9d\t Student name: %s", node.getStudentId(), node.getStudentName());
+        System.out.printf("The maximum ID is: %9d\t Student name: %s\n", node.getStudentId(), node.getStudentName());
         return node;
     }
 
     public TBTNode median() {
-        return null;
+        return median;
     }
 
     /**
