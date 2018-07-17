@@ -91,13 +91,13 @@ public class Main {
                     tbt.maximum();
                     break;
                 case INORDER:
-                    tbt.inorderTreeWalk();
+                    tbt.inOrderTreeWalk();
                     break;
                 case PREORDER:
-                    tbt.preorderTreeWalk();
+                    tbt.preOrderTreeWalk();
                     break;
                 case POSTORDER:
-                    tbt.postorderTreeWalk();
+                    tbt.postOrderTreeWalk();
                     break;
             }
         }

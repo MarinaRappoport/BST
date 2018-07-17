@@ -5,6 +5,7 @@ public class ThreadedBinaryTree {
 
     private TBTNode root;
     private TBTNode median = null;
+    private int smaller = 0, bigger = 0;
 
     public ThreadedBinaryTree() {
         this.root = null;
@@ -20,7 +21,7 @@ public class ThreadedBinaryTree {
         TBTNode newNode = new TBTNode(key, studentName);
         TBTNode node = root;
         TBTNode parent = null; //parent of the node to be inserted
-        while (node != null) { //Katrin: why not to use the search method?
+        while (node != null) {
             if (key == node.getStudentId()) {
                 System.out.println("There is already student with the same id");
                 return root;
@@ -42,8 +43,10 @@ public class ThreadedBinaryTree {
         if (parent == null) {
             root = newNode;
             median = newNode;
+            bigger = +1;
         }
-            //if key less than parent key put new node to the left
+
+        //if key less than parent key put new node to the left
         else if (key < parent.getStudentId()) {
             newNode.setLeft(parent.getLeft());
             newNode.setRight(parent);
@@ -59,10 +62,9 @@ public class ThreadedBinaryTree {
             parent.setRight(newNode);
         }
         //find the new median after insert
-        if (newNode.getStudentId() < median.getStudentId())
-            median = predecessor(median);
-        else if (newNode.getStudentId() > median.getStudentId())
-            median = successor(median);
+        if (newNode.getStudentId() < median.getStudentId()) smaller = smaller + 1;
+        else if (newNode.getStudentId() > median.getStudentId()) bigger = bigger + 1;
+        medianUpdate();
         return root;
     }
 
@@ -76,7 +78,7 @@ public class ThreadedBinaryTree {
         TBTNode node = root;
         TBTNode parent = null;
         boolean isFound = false;
-        while (node != null) { //Katrin: why not to use the search method?
+        while (node != null) {
             if (key == node.getStudentId()) {
                 isFound = true;
                 break;
@@ -95,15 +97,14 @@ public class ThreadedBinaryTree {
             }
         }
 
+        if (isFound) {
+            //found the new median before delete the the student
+            if (node.getStudentId() < median.getStudentId()) smaller = smaller - 1;
+            else if (node.getStudentId() >= median.getStudentId()) bigger = bigger - 1;
+            medianUpdate();
+        }
         if (!isFound)
             System.out.println("No student with the id: " + key + "\n");
-
-        //found the new median before delete the the student
-        if (node.getStudentId() < median.getStudentId())
-            median = successor(median);
-        else if (node.getStudentId() >= median.getStudentId())
-            median = predecessor(median);
-
             // Two Children
         else if (!node.isLeftThread() && !node.isRightThread())
             root = removeCase3(root, node);
@@ -319,6 +320,23 @@ public class ThreadedBinaryTree {
         return node;
     }
 
+    private void medianUpdate() {
+        if ((smaller + 1) < bigger) {
+            median = successor(median);
+            smaller = smaller + 1;
+            bigger = bigger - 1;
+        } else if (smaller > bigger) {
+            median = predecessor(median);
+            smaller = smaller - 1;
+            bigger = bigger + 1;
+        }
+    }
+
+    /**
+     * print the details of the median student
+     *
+     * @return
+     */
     public TBTNode median() {
         if (median == null) System.out.println("No students");
         else
@@ -329,22 +347,22 @@ public class ThreadedBinaryTree {
     /**
      * Function print the students in tree in pre-order
      */
-    public void preorderTreeWalk() {
-        preorderTreeWalk(root);
+    public void preOrderTreeWalk() {
+        preOrderTreeWalk(root);
     }
 
-    private void preorderTreeWalk(TBTNode node) {
+    private void preOrderTreeWalk(TBTNode node) {
         if (node != null) {
             System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
-            if (!node.isLeftThread()) preorderTreeWalk(node.getLeft());
-            if (!node.isRightThread()) preorderTreeWalk(node.getRight());
+            if (!node.isLeftThread()) preOrderTreeWalk(node.getLeft());
+            if (!node.isRightThread()) preOrderTreeWalk(node.getRight());
         }
     }
 
     /**
      * Function print the students in tree in in-order
      */
-    public void inorderTreeWalk() {
+    public void inOrderTreeWalk() {
         TBTNode node = mostLeft(root);
         while (node != null) {
             System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
@@ -365,14 +383,14 @@ public class ThreadedBinaryTree {
     /**
      * Function print the students in tree in post-order
      */
-    public void postorderTreeWalk() {
-        postorderTreeWalk(root);
+    public void postOrderTreeWalk() {
+        postOrderTreeWalk(root);
     }
 
-    private void postorderTreeWalk(TBTNode node) {
+    private void postOrderTreeWalk(TBTNode node) {
         if (node != null) {
-            if (!node.isLeftThread()) postorderTreeWalk(node.getLeft());
-            if (!node.isRightThread()) postorderTreeWalk(node.getRight());
+            if (!node.isLeftThread()) postOrderTreeWalk(node.getLeft());
+            if (!node.isRightThread()) postOrderTreeWalk(node.getRight());
             System.out.printf("%9d\t %s\n", node.getStudentId(), node.getStudentName());
         }
     }
