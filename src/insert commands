@@ -18,4 +18,7 @@ search,13
 search,1
 predecessor,5
 successor,5
+remove,5
+inorder
+preorder
 exit

@@ -205,7 +205,7 @@ public class ThreadedBinaryTree {
         TBTNode successor = node.getRight();
 
         // Find leftmost child of successor
-        while (successor.getLeft() != null) {
+        while (!successor.isLeftThread()) {
             parentSuccessor = successor;
             successor = successor.getLeft();
         }
@@ -240,17 +240,6 @@ public class ThreadedBinaryTree {
         return node;
     }
 
-//    /**
-//     * @param node
-//     * @param key
-//     * @return
-//     */
-//    public TBTNode searchRecursive(TBTNode node, int key) {
-//        if (node == null || key == node.getStudentId())
-//            return node;
-//        if (key < node.getStudentId()) return searchRecursive(node.getLeft(), key);
-//        else return searchRecursive(node.getRight(), key);
-//    }
 
     /**
      * Function to find the successor to given Node
