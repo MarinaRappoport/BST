@@ -1,7 +1,6 @@
 /**
  * Represent node of the Threaded Binary Tree
  */
-//commment
 public class TBTNode {
     private int studentId;
     private String studentName;
@@ -26,6 +25,7 @@ public class TBTNode {
         this.isRightThread = true;
     }
 
+    //Getters and setters
     public int getStudentId() {
         return studentId;
     }

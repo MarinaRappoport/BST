@@ -2,8 +2,17 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
 /**
- * Authors: Katrin Ten, Marina Rappoport
+ * Authors:
+ * Katrin Ten,
+ * Marina Rappoport, 342432044
+ * <p>
+ * The program allows to handle student info (student name and id):
+ * insert, remove, find according to id, find minimum|maximum|median id,
+ * print all info in different order(preorder, inorder, postorder)
+ * Supported input from the console and from the external file.
+ * Output is to console.
  */
 public class Main {
     private static ThreadedBinaryTree tbt = new ThreadedBinaryTree();
@@ -25,13 +34,15 @@ public class Main {
                 + "EXIT - to exit the program\n");
         JFileChooser chooser = new JFileChooser();
         int status = chooser.showOpenDialog(null);
-        if (status != JFileChooser.APPROVE_OPTION)
-            System.out.println("no file Chosen");
-        else fileInsert(chooser.getSelectedFile());
-        Scanner scanner = new Scanner(System.in);
-        String command = null;
-        while (!(command = scanner.nextLine()).equalsIgnoreCase(Command.EXIT.toString())) {
-            executeCommand(command.trim());
+        if (status == JFileChooser.APPROVE_OPTION)
+            fileInsert(chooser.getSelectedFile());
+        else {
+            System.out.println("No file chosen, will use console input");
+            Scanner scanner = new Scanner(System.in);
+            String command = null;
+            while (!(command = scanner.nextLine()).equalsIgnoreCase(Command.EXIT.toString())) {
+                executeCommand(command.trim());
+            }
         }
     }
 
@@ -66,18 +77,14 @@ public class Main {
                 case REMOVE:
                     if (commandArgs.length > 1) {
                         int id = getId(commandArgs[1]);
-                        if (id > 0) {
-                            tbt.remove(id);
-                        }
+                        if (id > 0) tbt.remove(id);
                     } else
                         System.out.println("Not enough parameters");
                     break;
                 case SEARCH:
                     if (commandArgs.length > 1) {
                         int id = getId(commandArgs[1]);
-                        if (id > 0) {
-                            tbt.search(id);
-                        }
+                        if (id > 0) tbt.search(id);
                     } else
                         System.out.println("Not enough parameters");
                     break;
@@ -93,18 +100,14 @@ public class Main {
                 case PREDECESSOR:
                     if (commandArgs.length > 1) {
                         int id = getId(commandArgs[1]);
-                        if (id > 0) {
-                            tbt.predecessor(id);
-                        }
+                        if (id > 0) tbt.predecessor(id);
                     } else
                         System.out.println("Not enough parameters");
                     break;
                 case SUCCESSOR:
                     if (commandArgs.length > 1) {
                         int id = getId(commandArgs[1]);
-                        if (id > 0) {
-                            tbt.successor(id);
-                        }
+                        if (id > 0) tbt.successor(id);
                     } else
                         System.out.println("Not enough parameters");
                     break;
@@ -121,6 +124,12 @@ public class Main {
         }
     }
 
+    /**
+     * parse integer from string
+     *
+     * @param arg string argument
+     * @return parsed integer
+     */
     private static int getId(String arg) {
         try {
             return Integer.parseInt(arg);

@@ -9,8 +9,8 @@ insert,12,h
 insert,5,aa
 minimum
 maximum
-inorder
 median
+inorder
 postorder
 preorder
 search,5
@@ -19,6 +19,9 @@ search,1
 predecessor,5
 successor,5
 remove,5
+inorder
+preorder
+remove,10
 inorder
 preorder
 exit

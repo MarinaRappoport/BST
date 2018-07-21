@@ -3,13 +3,9 @@
  */
 public class ThreadedBinaryTree {
 
-    private TBTNode root;
+    private TBTNode root = null;
     private TBTNode median = null;
     private int smaller = 0, bigger = 0;
-
-    public ThreadedBinaryTree() {
-        this.root = null;
-    }
 
     /**
      * Function to insert new student info into Threaded Binary Tree
