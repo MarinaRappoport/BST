@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * Authors:
- * Katrin Ten,
+ * Katrin Ten, 309893386
  * Marina Rappoport, 342432044
  * <p>
  * The program allows to handle student info (student name and id):
