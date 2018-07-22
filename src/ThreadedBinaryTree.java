@@ -5,7 +5,7 @@ public class ThreadedBinaryTree {
 
     private TBTNode root = null;
     private TBTNode median = null;
-    private int smaller = 0, bigger = 0;
+    private int smaller = 0, bigger = 0; //how many ids smaller or bigger than median
 
     /**
      * Function to insert new student info into Threaded Binary Tree
@@ -39,7 +39,6 @@ public class ThreadedBinaryTree {
         if (parent == null) {
             root = newNode;
             median = newNode;
-            bigger = +1;
         }
 
         //if key less than parent key put new node to the left
@@ -58,8 +57,8 @@ public class ThreadedBinaryTree {
             parent.setRight(newNode);
         }
         //find the new median after insert
-        if (newNode.getStudentId() < median.getStudentId()) smaller = smaller + 1;
-        else if (newNode.getStudentId() > median.getStudentId()) bigger = bigger + 1;
+        if (newNode.getStudentId() < median.getStudentId()) smaller++;
+        else if (newNode.getStudentId() > median.getStudentId()) bigger++;
         medianUpdate();
         return root;
     }
@@ -95,8 +94,8 @@ public class ThreadedBinaryTree {
 
         if (isFound) {
             //found the new median before delete the the student
-            if (node.getStudentId() < median.getStudentId()) smaller = smaller - 1;
-            else if (node.getStudentId() >= median.getStudentId()) bigger = bigger - 1;
+            if (node.getStudentId() <= median.getStudentId()) smaller--;
+            else if (node.getStudentId() > median.getStudentId()) bigger--;
             medianUpdate();
         }
         if (!isFound)
@@ -337,12 +336,12 @@ public class ThreadedBinaryTree {
     private void medianUpdate() {
         if ((smaller + 1) < bigger) {
             median = successor(median);
-            smaller = smaller + 1;
-            bigger = bigger - 1;
+            smaller++;
+            bigger--;
         } else if (smaller > bigger) {
             median = predecessor(median);
-            smaller = smaller - 1;
-            bigger = bigger + 1;
+            smaller--;
+            bigger++;
         }
     }
 

@@ -6,6 +6,7 @@ insert,4,e
 insert,3,f
 insert,6,g
 insert,12,h
+insert,11,j
 insert,5,aa
 minimum
 maximum
@@ -19,8 +20,10 @@ search,1
 predecessor,5
 successor,5
 remove,5
+median
 inorder
 preorder
 remove,10
+median
 inorder
 preorder
